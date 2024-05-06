@@ -1,7 +1,6 @@
 # Mood Journal
 
-## Table of Content
-
+<h1>Table of Content</h1>
 <ol>
     <li><a href="#subject1">What is Mood Journal?</a></li>
     <li><a href="#subject2">Technologies used</a></li>
