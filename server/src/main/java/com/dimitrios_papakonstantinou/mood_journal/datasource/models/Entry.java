@@ -13,6 +13,8 @@ public class Entry {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Id
+    private Long userId;
     private String text;
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
