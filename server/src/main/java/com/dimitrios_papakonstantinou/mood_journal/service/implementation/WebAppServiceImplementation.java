@@ -7,8 +7,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class WebAppServiceImplementation implements WebAppService {
 
-    public String addEntry(Entry entry) {
+    public String saveEntry(Entry entry) {
         //TODO implements method
-        return "Succes";
+        return "Success";
     }
 }
