@@ -15,7 +15,7 @@ public class WebAppServiceImplementation implements WebAppService {
     private UserRepository userRepository;
 
     public String saveEntry(Entry entry) {
-        if(userRepository.findById(entry.getUserId()).isPresent()) {
+        if(userRepository.findByUserId(entry.getUserId()).isPresent()) {
             try {
                 entryRepository.save(entry);
                 return "Success";
@@ -25,5 +25,14 @@ public class WebAppServiceImplementation implements WebAppService {
             }
         }
         return "Invalid user ID";
+    }
+
+    public Entry getEntry(Long userId) {
+        var currentDate = "05.10.2024"; //TODO get real date
+        if(entryRepository.findByUserId(userId).findByDate(currentDate).isPressent()) {
+            return null;
+        }
+
+        return new Entry(); //TODO call static factory for entry not found
     }
 }
