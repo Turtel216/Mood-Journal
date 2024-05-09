@@ -16,7 +16,7 @@ public class WebAppController {
     }
 
     @GetMapping("/entry/{userId}")
-    public Entry getEntry(@PathVariable('userId') Long userId) {
+    public Entry getEntry(@PathVariable Long userId) {
         return webAppService.getEntry(userId);
     }
 }
