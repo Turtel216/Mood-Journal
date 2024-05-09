@@ -34,6 +34,6 @@ public class WebAppServiceImplementation implements WebAppService {
             return null;
         }
 
-        return new Entry(); //TODO call static factory for entry not found
+        return new Entry(); //TODO call static factory for entry not found from EntryResponse subClass(extends entry)
     }
 }
