@@ -14,6 +14,7 @@ public class WebAppServiceImplementation implements WebAppService {
     private EntryRepository entryRepository;
     private UserRepository userRepository;
 
+    //TODO add findByUserId and findByDate
     public String saveEntry(Entry entry) {
         if(userRepository.findByUserId(entry.getUserId()).isPresent()) {
             try {
