@@ -14,4 +14,9 @@ public class WebAppController {
     public String addEntry(@RequestBody Entry entry) {
         return webAppService.saveEntry(entry);
     }
+
+    @GetMapping("/entry/{userId}")
+    public String getEntry(@PathVariable('userId') Long userId) {
+        return webAppService.getEntry(userId);
+    }
 }
