@@ -19,7 +19,7 @@
 
 This project uses the following technologies on the backend:
 
-* Java: [Java SE](https://www.oracle.com/java/technologies/javase/) (version 11+)
+* Java (version 17)
 * Spring Boot
 * Spring Web
 * Spring Data JPA
@@ -27,11 +27,12 @@ This project uses the following technologies on the backend:
 * Lombok
 * MySQL
 
-This project uses the following technologies on the backend:
+This project uses the following technologies on the frontend:
 
 * Typescript
 * ReactJS
 * Axios
+* Tailwindcss
 
 <h1 id="subject3">Project Structure</h1>
 
