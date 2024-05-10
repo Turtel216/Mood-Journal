@@ -17,6 +17,7 @@ public class WebAppController {
 
     @GetMapping("/entry/{userId}")
     public Entry getEntry(@PathVariable Long userId) {
-        return webAppService.getEntry(userId);
+        var entry = webAppService.getEntry(userId);
+        return entry != null ? entry : null; //TODO replace null with proper response
     }
 }
