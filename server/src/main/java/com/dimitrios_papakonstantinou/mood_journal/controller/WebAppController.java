@@ -1,7 +1,11 @@
 package com.dimitrios_papakonstantinou.mood_journal.controller;
 
 import com.dimitrios_papakonstantinou.mood_journal.datasource.models.Entry;
+import com.dimitrios_papakonstantinou.mood_journal.response.ResponseHandler;
 import com.dimitrios_papakonstantinou.mood_journal.service.implementation.WebAppServiceImplementation;
+import org.apache.coyote.Response;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -15,9 +19,15 @@ public class WebAppController {
         return webAppService.saveEntry(entry);
     }
 
+    //TODO let getEntry throw exception instead of returning null
     @GetMapping("/entry/{userId}")
-    public Entry getEntry(@PathVariable Long userId) {
+    public ResponseEntity<Object> getEntry(@PathVariable Long userId) {
         var entry = webAppService.getEntry(userId);
-        return entry != null ? entry : null; //TODO replace null with proper response
+
+        if(entry == null) {
+            return ResponseHandler.responseBuilder("Failed to fetch data", HttpStatus.NOT_FOUND, entry);
+        }
+
+        return ResponseHandler.responseBuilder("Requested entry", HttpStatus.OK, entry);
     }
 }
