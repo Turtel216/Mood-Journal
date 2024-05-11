@@ -30,10 +30,10 @@ public class WebAppServiceImplementation implements WebAppService {
 
     public Entry getEntry(Long userId) {
         var currentDate = "05.10.2024"; //TODO get real date
-        if(entryRepository.findByUserId(userId).findByEntryDate(currentDate).isPressent()) {
-            return entryRepository.findByUserId(userId).findByEntryDate(currentDate).get();
+        if(entryRepository.findByEntryDateAndUserId(currentDate, userId).isPresent()) {
+            return entryRepository.findByEntryDateAndUserId(currentDate, userId).get();
         }
 
-        return null; //TODO call static factory for entry not found from EntryResponse subClass(extends entry)
+        return null;
     }
 }
