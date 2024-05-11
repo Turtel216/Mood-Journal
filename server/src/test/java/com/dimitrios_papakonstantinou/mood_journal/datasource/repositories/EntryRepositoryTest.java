@@ -13,7 +13,7 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.*;
 
 @DataJpaTest
-public class EntryRepositoryTest {
+class EntryRepositoryTest {
 
     @Autowired
     private EntryRepository entryRepository;
