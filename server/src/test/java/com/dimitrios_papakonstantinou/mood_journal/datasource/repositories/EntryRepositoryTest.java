@@ -37,13 +37,23 @@ public class EntryRepositoryTest {
     void testFindByEntryDateAndUserId_Found() {
         Optional<Entry> foundEntry = entryRepository.findByEntryDateAndUserId("05.05.2024", 1L);
 
-        assertThat(foundEntry.get().getId().equals(entry.getId()));
-        assertThat(foundEntry.get().getEntryDate().equals(entry.getEntryDate()));
-        assertThat(foundEntry.get().getUserId().equals(entry.getUserId()));
-        assertThat(foundEntry.get().getText().equals(entry.getText()));
-        assertThat(foundEntry.get().getMood().equals(entry.getMood()));
+        assertThat(foundEntry.get().getId().equals(entry.getId())).isTrue();
+        assertThat(foundEntry.get().getEntryDate().equals(entry.getEntryDate())).isTrue();
+        assertThat(foundEntry.get().getUserId().equals(entry.getUserId())).isTrue();
+        assertThat(foundEntry.get().getText().equals(entry.getText())).isTrue();
+        assertThat(foundEntry.get().getMood().equals(entry.getMood())).isTrue();
 
     }
 
     // Test case FAILURE
+    @Test
+    void testFindByEntryDatedUserId_NotFound() {
+
+        Optional<Entry> entry1 = entryRepository.findByEntryDateAndUserId("06.05.2024", 1L);
+        Optional<Entry> entry2 = entryRepository.findByEntryDateAndUserId("05.05.2024", 4L);
+        Optional<Entry> entry3 = entryRepository.findByEntryDateAndUserId("06.05.2024", 2L);
+        assertThat(entry1.isEmpty()).isTrue();
+        assertThat(entry2.isEmpty()).isTrue();
+        assertThat(entry3.isEmpty()).isTrue();
+    }
 }
