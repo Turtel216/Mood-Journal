@@ -1,13 +1,11 @@
 package com.dimitrios_papakonstantinou.mood_journal.datasource.models;
 
 import jakarta.persistence.*;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
-@Data
 @Entity
-@Table(name = "user")
+@Table(name = "_user")
 @Getter
 @Setter
 public class User {

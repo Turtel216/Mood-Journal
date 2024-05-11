@@ -17,7 +17,7 @@ public class Entry {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Id
+    @Column(nullable = false)
     private Long userId;
     private String text;
     @Column(nullable = false)

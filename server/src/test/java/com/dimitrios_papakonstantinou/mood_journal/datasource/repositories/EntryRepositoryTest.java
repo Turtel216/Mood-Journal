@@ -4,6 +4,7 @@ import com.dimitrios_papakonstantinou.mood_journal.datasource.models.Entry;
 import com.dimitrios_papakonstantinou.mood_journal.datasource.models.Mood;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
@@ -32,6 +33,7 @@ public class EntryRepositoryTest {
     }
 
     // Test case SUCCESS
+    @Test
     void testFindByEntryDateAndUserId_Found() {
         Optional<Entry> foundEntry = entryRepository.findByEntryDateAndUserId("05.05.2024", 1L);
 
