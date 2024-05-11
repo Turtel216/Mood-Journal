@@ -19,12 +19,14 @@
 
 This project uses the following technologies on the backend:
 
-* Java (version 17)
+* Java (SE 17)
 * Spring Boot
 * Spring Web
 * Spring Data JPA
 * Spring Security
 * Lombok
+* H2 
+* Mockito
 * MySQL
 
 This project uses the following technologies on the frontend:
