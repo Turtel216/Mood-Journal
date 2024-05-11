@@ -21,5 +21,5 @@ public class Entry {
     private Mood mood;
     @Column(nullable = false)
     //Todo refactor to add actual date
-    private String date;
+    private String entryDate;
 }
