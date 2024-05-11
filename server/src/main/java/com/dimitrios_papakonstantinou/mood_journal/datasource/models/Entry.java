@@ -1,11 +1,15 @@
 package com.dimitrios_papakonstantinou.mood_journal.datasource.models;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Table(name = "entry")
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
 public class Entry {
@@ -22,4 +26,5 @@ public class Entry {
     @Column(nullable = false)
     //Todo refactor to add actual date
     private String entryDate;
+
 }
