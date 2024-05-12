@@ -20,7 +20,8 @@
 This project uses the following technologies on the backend:
 
 * Java (SE 17)
-* Spring Boot
+* Maven (version 4.0.0)
+* Spring Boot (version 3.2.5)
 * Spring Web
 * Spring Data JPA
 * Spring Security
