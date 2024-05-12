@@ -25,7 +25,7 @@ public class WebAppServiceImplementation implements WebAppService {
                 return "Failure" + e.toString();
             }
         }
-        return "Invalid user ID";
+        return "User ID not found";
     }
 
     public Entry getEntry(Long userId) {
