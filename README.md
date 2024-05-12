@@ -19,9 +19,9 @@
 
 This project uses the following technologies on the backend:
 
-* Java (SE 17)
-* Maven (version 4.0.0)
-* Spring Boot (version 3.2.5)
+* [Java (SE 17)](https://openjdk.org/projects/jdk/17/)
+* [Maven (version 4.0.0)](https://maven.apache.org/ref/4.0.0-alpha-9/)
+* [Spring Boot (version 3.2.5)](https://docs.spring.io/spring-boot/docs/current/reference/html/getting-started.html)
 * Spring Web
 * Spring Data JPA
 * Spring Security
