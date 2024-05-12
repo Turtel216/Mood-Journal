@@ -3,6 +3,7 @@ package com.dimitrios_papakonstantinou.mood_journal.service.implementation;
 import com.dimitrios_papakonstantinou.mood_journal.datasource.models.Entry;
 import com.dimitrios_papakonstantinou.mood_journal.datasource.repositories.EntryRepository;
 import com.dimitrios_papakonstantinou.mood_journal.datasource.repositories.UserRepository;
+import com.dimitrios_papakonstantinou.mood_journal.exceptions.UserIdNotFoundException;
 import com.dimitrios_papakonstantinou.mood_journal.service.WebAppService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -25,7 +26,8 @@ public class WebAppServiceImplementation implements WebAppService {
                 return "Failure" + e.toString();
             }
         }
-        return "User ID not found";
+
+        throw new UserIdNotFoundException("Provided entity does not match any user");
     }
 
     public Entry getEntry(Long userId) {
