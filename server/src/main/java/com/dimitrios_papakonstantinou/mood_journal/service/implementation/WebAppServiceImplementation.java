@@ -3,6 +3,7 @@ package com.dimitrios_papakonstantinou.mood_journal.service.implementation;
 import com.dimitrios_papakonstantinou.mood_journal.datasource.models.Entry;
 import com.dimitrios_papakonstantinou.mood_journal.datasource.repositories.EntryRepository;
 import com.dimitrios_papakonstantinou.mood_journal.datasource.repositories.UserRepository;
+import com.dimitrios_papakonstantinou.mood_journal.exceptions.EntryIdAndEntryDateNotFoundException;
 import com.dimitrios_papakonstantinou.mood_journal.exceptions.UserIdNotFoundException;
 import com.dimitrios_papakonstantinou.mood_journal.service.WebAppService;
 import lombok.AllArgsConstructor;
@@ -36,6 +37,6 @@ public class WebAppServiceImplementation implements WebAppService {
             return entryRepository.findByEntryDateAndUserId(currentDate, userId).get();
         }
 
-        return null;
+        throw new EntryIdAndEntryDateNotFoundException("Request entry not found");
     }
 }
