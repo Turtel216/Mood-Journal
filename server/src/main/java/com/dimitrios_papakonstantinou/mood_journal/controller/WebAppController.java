@@ -23,7 +23,7 @@ public class WebAppController {
         return webAppService.saveEntry(entry);
     }
 
-    // saveEntry throws exception on uerId not found and returns updated NotFound response to client
+    // saveEntry throws exception on userId not found and returns an updated NotFound response to client
     @GetMapping("/entry/{userId}")
     public ResponseEntity<Object> getEntry(@PathVariable Long userId) {
         var currentDate = "05.05.2024";

@@ -3,6 +3,7 @@ package com.dimitrios_papakonstantinou.mood_journal.service.implementation;
 import com.dimitrios_papakonstantinou.mood_journal.datasource.models.Entry;
 import com.dimitrios_papakonstantinou.mood_journal.datasource.repositories.EntryRepository;
 import com.dimitrios_papakonstantinou.mood_journal.datasource.repositories.UserRepository;
+import com.dimitrios_papakonstantinou.mood_journal.exceptions.EntryCouldNotBeSavedException;
 import com.dimitrios_papakonstantinou.mood_journal.exceptions.EntryIdAndEntryDateNotFoundException;
 import com.dimitrios_papakonstantinou.mood_journal.exceptions.UserIdNotFoundException;
 import com.dimitrios_papakonstantinou.mood_journal.service.WebAppService;
@@ -25,8 +26,7 @@ public class WebAppServiceImplementation implements WebAppService {
                 entryRepository.save(entry);
                 return "Success";
             } catch(Exception e){
-                //TODO throw proper exception
-                return "Failure" + e.toString();
+                throw new EntryCouldNotBeSavedException("The entity could not be saved", e.getCause());
             }
         }
 
