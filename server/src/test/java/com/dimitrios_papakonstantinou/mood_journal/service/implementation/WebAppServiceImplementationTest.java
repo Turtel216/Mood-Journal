@@ -5,6 +5,7 @@ import com.dimitrios_papakonstantinou.mood_journal.datasource.models.Mood;
 import com.dimitrios_papakonstantinou.mood_journal.datasource.models.User;
 import com.dimitrios_papakonstantinou.mood_journal.datasource.repositories.EntryRepository;
 import com.dimitrios_papakonstantinou.mood_journal.datasource.repositories.UserRepository;
+import com.dimitrios_papakonstantinou.mood_journal.exceptions.EntryCouldNotBeSavedException;
 import com.dimitrios_papakonstantinou.mood_journal.exceptions.EntryIdAndEntryDateNotFoundException;
 import com.dimitrios_papakonstantinou.mood_journal.exceptions.UserIdNotFoundException;
 import com.dimitrios_papakonstantinou.mood_journal.service.WebAppService;
@@ -78,6 +79,24 @@ class WebAppServiceImplementationTest {
 
         UserIdNotFoundException exception = assertThrows(UserIdNotFoundException.class, () -> webAppService.saveEntry(entry));
         assertEquals(exception.getMessage(), "Provided entity does not match any user");
+    }
+
+    @Test
+    void testSaveEntry_CouldNotBeSaved() {
+        mock(Entry.class);
+        mock(EntryRepository.class);
+
+        Long userId = entry.getUserId();
+        Throwable throwable = new Throwable();
+        Exception exception = new RuntimeException(throwable.getCause());
+
+        when(userRepository.findById(userId)).thenReturn(Optional.of(user));
+        when(entryRepository.save(entry)).thenThrow(exception);
+
+        EntryCouldNotBeSavedException e = assertThrows(EntryCouldNotBeSavedException.class,
+                () -> webAppService.saveEntry(entry));
+        assertEquals(e.getMessage(), "The entity could not be saved");
+        assertEquals(e.getCause(), exception.getCause());
     }
 
     //Test case Success

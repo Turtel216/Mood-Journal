@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice
 public class EntryExceptionHandler {
 
-    @ExceptionHandler(value = {EntryIdAndEntryDateNotFoundException.class})
+    @ExceptionHandler(value = {EntryIdAndEntryDateNotFoundException.class, EntryCouldNotBeSavedException.class})
     public ResponseEntity<Object> EntryIdAndEntryDateNotFoundException
             (EntryIdAndEntryDateNotFoundException entryIdAndEntryDateNotFoundException)
     {
