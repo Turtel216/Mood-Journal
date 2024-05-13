@@ -27,13 +27,27 @@ public class Entry {
     //Todo refactor to add actual date
     private String entryDate;
 
-    public boolean equals(Entry entry) {
-        assert entry != null;
-        return entry.getId().equals(id)
-                && entry.getUserId().equals(userId)
-                && entry.getText().equals(text)
-                && entry.getMood().equals(mood)
-                && entry.getEntryDate().equals(getEntryDate());
+    @Override
+    public boolean equals(Object obj) {
+        if(obj == null)
+            return false;
 
+        if(obj.getClass() != this.getClass())
+            return false;
+
+        final Entry other = (Entry) obj;
+
+        if((this.id == null) ? (other.id != null) : !this.id.equals(other.id))
+            return false;
+        if((this.userId == null) ? (other.userId != null) : !this.userId.equals(other.userId))
+            return false;
+        if((this.text == null) ? (other.text != null) : !this.text.equals(other.text))
+            return false;
+        if((this.mood == null) ? (other.mood != null) : !this.mood.equals(other.mood))
+            return false;
+        if((this.entryDate == null) ? (other.entryDate != null) : !this.entryDate.equals(other.entryDate))
+            return false;
+
+        return true;
     }
 }

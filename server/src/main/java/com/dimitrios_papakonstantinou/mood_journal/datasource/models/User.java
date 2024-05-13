@@ -24,12 +24,25 @@ public class User {
     private String password;
     private String email;
 
-    public boolean equals(User user) {
-        assert user != null;
-        return user.getId().equals(id)
-                && user.getUsername().equals(username)
-                && user.getPassword().equals(password)
-                && user.getEmail().equals(email);
+    @Override
+    public boolean equals(Object obj) {
+        if(obj == null)
+            return false;
 
+        if(obj.getClass() != this.getClass())
+            return false;
+
+        final User other = (User) obj;
+
+        if((this.id == null) ? (other.id != null) : !this.id.equals(other.id))
+            return false;
+        if((this.username == null) ? (other.username != null) : !this.username.equals(other.username))
+            return false;
+        if((this.password == null) ? (other.password != null) : !this.password.equals(other.password))
+            return false;
+        if((this.email == null) ? (other.email != null) : !this.email.equals(other.email))
+            return false;
+
+        return true;
     }
 }
