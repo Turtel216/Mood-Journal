@@ -1,5 +1,6 @@
 package com.dimitrios_papakonstantinou.mood_journal.datasource.models;
 
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,4 +24,12 @@ public class User {
     private String password;
     private String email;
 
+    public boolean equals(User user) {
+        assert user != null;
+        return user.getId().equals(id)
+                && user.getUsername().equals(username)
+                && user.getPassword().equals(password)
+                && user.getEmail().equals(email);
+
+    }
 }

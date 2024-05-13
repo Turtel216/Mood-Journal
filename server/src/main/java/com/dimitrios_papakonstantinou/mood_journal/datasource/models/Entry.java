@@ -27,4 +27,13 @@ public class Entry {
     //Todo refactor to add actual date
     private String entryDate;
 
+    public boolean equals(Entry entry) {
+        assert entry != null;
+        return entry.getId().equals(id)
+                && entry.getUserId().equals(userId)
+                && entry.getText().equals(text)
+                && entry.getMood().equals(mood)
+                && entry.getEntryDate().equals(getEntryDate());
+
+    }
 }
