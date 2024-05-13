@@ -17,6 +17,8 @@ public class WebAppServiceImplementation implements WebAppService {
     private UserRepository userRepository;
 
     //TODO add findByUserId and findByDate
+
+    @Override
     public String saveEntry(Entry entry) {
         if(userRepository.findById(entry.getUserId()).isPresent()) {
             try {
@@ -31,8 +33,8 @@ public class WebAppServiceImplementation implements WebAppService {
         throw new UserIdNotFoundException("Provided entity does not match any user");
     }
 
-    public Entry getEntry(Long userId) {
-        var currentDate = "05.10.2024"; //TODO get real date
+    @Override
+    public Entry getEntry(Long userId, String currentDate) {
         if(entryRepository.findByEntryDateAndUserId(currentDate, userId).isPresent()) {
             return entryRepository.findByEntryDateAndUserId(currentDate, userId).get();
         }

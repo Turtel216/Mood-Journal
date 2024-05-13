@@ -5,6 +5,7 @@ import com.dimitrios_papakonstantinou.mood_journal.datasource.models.Mood;
 import com.dimitrios_papakonstantinou.mood_journal.datasource.models.User;
 import com.dimitrios_papakonstantinou.mood_journal.datasource.repositories.EntryRepository;
 import com.dimitrios_papakonstantinou.mood_journal.datasource.repositories.UserRepository;
+import com.dimitrios_papakonstantinou.mood_journal.exceptions.EntryIdAndEntryDateNotFoundException;
 import com.dimitrios_papakonstantinou.mood_journal.exceptions.UserIdNotFoundException;
 import com.dimitrios_papakonstantinou.mood_journal.service.WebAppService;
 import org.junit.jupiter.api.AfterEach;
@@ -79,9 +80,26 @@ class WebAppServiceImplementationTest {
         assertEquals(exception.getMessage(), "Provided entity does not match any user");
     }
 
-    //TODO
     //Test case Success
     @Test
     void testGetEntry_Found() {
+        mock(Entry.class);
+        mock(EntryRepository.class);
+
+        when(entryRepository.findByEntryDateAndUserId("05.05.2024", 1L)).thenReturn(Optional.ofNullable(entry));
+        assertThat(webAppService.getEntry(1L, "05.05.2024").equals(entry)).isTrue();
+    }
+
+    //Test case Failure
+    @Test
+    void testGetEntry_NotFound() {
+        mock(Entry.class);
+        mock(EntryRepository.class);
+
+        when(entryRepository.findByEntryDateAndUserId("05.05.2024", 2L)).thenReturn(Optional.empty());
+
+        EntryIdAndEntryDateNotFoundException exception = assertThrows(EntryIdAndEntryDateNotFoundException.class,
+                () -> webAppService.getEntry(2L, "05.05.2024"));
+        assertEquals(exception.getMessage(), "Request entry not found");
     }
 }
