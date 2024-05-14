@@ -121,4 +121,29 @@ class WebAppServiceImplementationTest {
                 () -> webAppService.getEntry(2L, "05.05.2024"));
         assertEquals(exception.getMessage(), "Request entry not found");
     }
+
+    //Test case Success
+    @Test
+    void testGetUser_found() {
+        mock(User.class);
+        mock(UserRepository.class);
+
+        when(userRepository.findById(user.getId())).thenReturn(Optional.of(user));
+
+        assertThat(webAppService.getUser(user.getId()).equals(user)).isTrue();
+    }
+
+    //Test case Failure
+    @Test
+    void testGetUser_NotFound() {
+        mock(User.class);
+        mock(UserRepository.class);
+
+        when(userRepository.findById(user.getId())).thenReturn(Optional.empty());
+
+        UserIdNotFoundException exception = assertThrows(UserIdNotFoundException.class,
+                () -> webAppService.getUser(user.getId()));
+
+        assertEquals(exception.getMessage(), "Provided user id does not match any user in the data base");
+    }
 }
