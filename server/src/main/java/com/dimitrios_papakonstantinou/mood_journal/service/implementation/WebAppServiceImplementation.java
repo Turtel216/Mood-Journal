@@ -1,6 +1,7 @@
 package com.dimitrios_papakonstantinou.mood_journal.service.implementation;
 
 import com.dimitrios_papakonstantinou.mood_journal.datasource.models.Entry;
+import com.dimitrios_papakonstantinou.mood_journal.datasource.models.User;
 import com.dimitrios_papakonstantinou.mood_journal.datasource.repositories.EntryRepository;
 import com.dimitrios_papakonstantinou.mood_journal.datasource.repositories.UserRepository;
 import com.dimitrios_papakonstantinou.mood_journal.exceptions.EntryCouldNotBeSavedException;
@@ -16,8 +17,6 @@ public class WebAppServiceImplementation implements WebAppService {
 
     private EntryRepository entryRepository;
     private UserRepository userRepository;
-
-    //TODO add findByUserId and findByDate
 
     @Override
     public String saveEntry(Entry entry) {
@@ -40,5 +39,13 @@ public class WebAppServiceImplementation implements WebAppService {
         }
 
         throw new EntryIdAndEntryDateNotFoundException("Request entry not found");
+    }
+
+    @Override
+    public User getUser(Long userId) {
+        if(userRepository.findById(userId).isPresent())
+            return userRepository.findById(userId).get();
+
+        throw new UserIdNotFoundException("Provided user id does not match any user in the data base");
     }
 }
