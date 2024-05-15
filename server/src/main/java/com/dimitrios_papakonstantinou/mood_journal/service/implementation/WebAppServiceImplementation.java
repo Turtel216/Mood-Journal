@@ -60,6 +60,6 @@ public class WebAppServiceImplementation implements WebAppService {
                     .stream().map(Entry::getMood)
                     .collect(Collectors.toList());
 
-        throw new UserIdNotFoundException("Provided user id does not match any user in the data base");
+        throw new UserIdNotFoundException("Provided user id does not match any mood entry in the data base");
     }
 }

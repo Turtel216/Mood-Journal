@@ -15,7 +15,9 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -125,7 +127,7 @@ class WebAppServiceImplementationTest {
 
     //Test case Success
     @Test
-    void testGetUser_found() {
+    void testGetUser_Found() {
         mock(User.class);
         mock(UserRepository.class);
 
@@ -146,5 +148,33 @@ class WebAppServiceImplementationTest {
                 () -> webAppService.getUser(user.getId()));
 
         assertEquals(exception.getMessage(), "Provided user id does not match any user in the data base");
+    }
+
+    //Test case Success
+    @Test
+    void testGetMood_Found() {
+        mock(Entry.class);
+        mock(EntryRepository.class);
+
+        List<Entry> entries = List.of(entry);
+
+        when(entryRepository.findByUserId(user.getId())).thenReturn(Optional.of(entries));
+
+        assertThat(webAppService.getMood(user.getId())).isEqualTo(entries.stream().map(Entry::getMood).collect(Collectors.toList()));
+    }
+
+    //Test case user not found
+    @Test
+    void testGetMood_UserNotFound() {
+        mock(Entry.class);
+        mock(EntryRepository.class);
+
+        List<Entry> entries = List.of(entry);
+
+        when(entryRepository.findByUserId(user.getId())).thenReturn(Optional.empty());
+
+        UserIdNotFoundException exception = assertThrows(UserIdNotFoundException.class,
+                () -> webAppService.getMood(user.getId()));
+        assertEquals(exception.getMessage(), "Provided user id does not match any mood entry in the data base");
     }
 }
