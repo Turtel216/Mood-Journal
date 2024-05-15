@@ -63,10 +63,10 @@ class WebAppServiceImplementationTest {
         when(userRepository.findById(userId)).thenReturn(Optional.of(user));
         when(entryRepository.save(entry)).thenReturn(entry);
 
-        assertThat(webAppService.saveEntry(entry)).isEqualTo("Success");
+        assertThat(webAppService.saveEntry(entry)).isEqualTo("Entry saved successfully");
     }
 
-    // Test case User not found
+    // Test case failure, User not found
     @Test
     void testSaveEntry_UserNotFound() {
         mock(Entry.class);
@@ -81,6 +81,7 @@ class WebAppServiceImplementationTest {
         assertEquals(exception.getMessage(), "Provided entity does not match any user");
     }
 
+    // Test case failure, couldn't save entry
     @Test
     void testSaveEntry_CouldNotBeSaved() {
         mock(Entry.class);

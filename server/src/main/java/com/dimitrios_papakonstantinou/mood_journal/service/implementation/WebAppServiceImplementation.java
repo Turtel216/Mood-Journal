@@ -19,10 +19,11 @@ public class WebAppServiceImplementation implements WebAppService {
     private UserRepository userRepository;
 
     @Override
-    public void saveEntry(Entry entry) {
+    public String saveEntry(Entry entry) {
         if(userRepository.findById(entry.getUserId()).isPresent()) {
             try {
                 entryRepository.save(entry);
+                return "Entry saved successfully";
             } catch(Exception e){
                 throw new EntryCouldNotBeSavedException("The entity could not be saved", e.getCause());
             }

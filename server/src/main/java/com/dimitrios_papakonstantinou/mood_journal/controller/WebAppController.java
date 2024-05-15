@@ -17,9 +17,9 @@ public class WebAppController {
 
     @PostMapping("/entry")
     public ResponseEntity<Object> addEntry(@RequestBody Entry entry) {
-        webAppService.saveEntry(entry);
+        var responeString = webAppService.saveEntry(entry);
 
-        return ResponseHandler.responseBuilder("Entry saved successfully", HttpStatus.OK, entry);
+        return ResponseHandler.responseBuilder(responeString, HttpStatus.OK, entry);
     }
 
     // saveEntry throws exception on userId not found and returns an updated NotFound response to client
