@@ -3,9 +3,7 @@ package com.dimitrios_papakonstantinou.mood_journal.controller;
 import com.dimitrios_papakonstantinou.mood_journal.datasource.models.Entry;
 import com.dimitrios_papakonstantinou.mood_journal.response.ResponseHandler;
 import com.dimitrios_papakonstantinou.mood_journal.service.WebAppService;
-import com.dimitrios_papakonstantinou.mood_journal.service.implementation.WebAppServiceImplementation;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,8 +16,10 @@ public class WebAppController {
     private WebAppService webAppService;
 
     @PostMapping("/entry")
-    public String addEntry(@RequestBody Entry entry) {
-        return webAppService.saveEntry(entry);
+    public ResponseEntity<Object> addEntry(@RequestBody Entry entry) {
+        webAppService.saveEntry(entry);
+
+        return ResponseHandler.responseBuilder("Entry saved successfully", HttpStatus.OK, entry);
     }
 
     // saveEntry throws exception on userId not found and returns an updated NotFound response to client
