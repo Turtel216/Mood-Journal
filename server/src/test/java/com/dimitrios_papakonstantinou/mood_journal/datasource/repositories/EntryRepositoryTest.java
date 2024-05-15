@@ -7,12 +7,15 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.annotation.DirtiesContext;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.*;
 
 @DataJpaTest
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 class EntryRepositoryTest {
 
     @Autowired
@@ -37,6 +40,7 @@ class EntryRepositoryTest {
     void testFindByEntryDateAndUserId_Found() {
         Optional<Entry> foundEntry = entryRepository.findByEntryDateAndUserId("05.05.2024", 1L);
 
+        assertThat(foundEntry.isPresent()).isTrue();
         assertThat(foundEntry.get().getId().equals(entry.getId())).isTrue();
         assertThat(foundEntry.get().getEntryDate().equals(entry.getEntryDate())).isTrue();
         assertThat(foundEntry.get().getUserId().equals(entry.getUserId())).isTrue();
@@ -55,5 +59,24 @@ class EntryRepositoryTest {
         assertThat(entry1.isEmpty()).isTrue();
         assertThat(entry2.isEmpty()).isTrue();
         assertThat(entry3.isEmpty()).isTrue();
+    }
+
+    // Test case SUCCESS
+    @Test
+    void testFindByUserId_Found() {
+        Optional<List<Entry>> foundEntries = entryRepository.findByUserId(1L);
+
+        assertThat(foundEntries.isPresent()).isTrue();
+
+        foundEntries.get().forEach(
+                foundEntry -> assertThat(foundEntry.equals(entry)).isTrue());
+    }
+
+    // Test case FAILURE
+    @Test
+    void testFindByUserId_NotFound() {
+        Optional<List<Entry>> foundEntries = entryRepository.findByUserId(2L);
+
+        assertThat(foundEntries.isEmpty()).isFalse();
     }
 }
