@@ -1,6 +1,7 @@
 package com.dimitrios_papakonstantinou.mood_journal.service.implementation;
 
 import com.dimitrios_papakonstantinou.mood_journal.datasource.models.Entry;
+import com.dimitrios_papakonstantinou.mood_journal.datasource.models.Mood;
 import com.dimitrios_papakonstantinou.mood_journal.datasource.models.User;
 import com.dimitrios_papakonstantinou.mood_journal.datasource.repositories.EntryRepository;
 import com.dimitrios_papakonstantinou.mood_journal.datasource.repositories.UserRepository;
@@ -10,6 +11,9 @@ import com.dimitrios_papakonstantinou.mood_journal.exceptions.UserIdNotFoundExce
 import com.dimitrios_papakonstantinou.mood_journal.service.WebAppService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -45,6 +49,16 @@ public class WebAppServiceImplementation implements WebAppService {
     public User getUser(Long userId) {
         if(userRepository.findById(userId).isPresent())
             return userRepository.findById(userId).get();
+
+        throw new UserIdNotFoundException("Provided user id does not match any user in the data base");
+    }
+
+    @Override
+    public List<Mood> getMood(Long userId) {
+        if(entryRepository.findByUserId(userId).isPresent())
+            return entryRepository.findByUserId(userId).get()
+                    .stream().map(Entry::getMood)
+                    .collect(Collectors.toList());
 
         throw new UserIdNotFoundException("Provided user id does not match any user in the data base");
     }
