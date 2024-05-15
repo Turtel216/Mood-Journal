@@ -15,6 +15,7 @@ public class WebAppController {
 
     private WebAppService webAppService;
 
+    // saveEntry throws an exception on userId not found and returns an updated NotFound response
     @PostMapping("/entry")
     public ResponseEntity<Object> addEntry(@RequestBody Entry entry) {
         var responeString = webAppService.saveEntry(entry);
@@ -22,12 +23,20 @@ public class WebAppController {
         return ResponseHandler.responseBuilder(responeString, HttpStatus.OK, entry);
     }
 
-    // saveEntry throws exception on userId not found and returns an updated NotFound response to client
+    // getEntry throws exception on userId/currentDate not found and returns an updated NotFound response to client
     @GetMapping("/entry/{userId}")
     public ResponseEntity<Object> getEntry(@PathVariable("userId") Long userId) {
         var currentDate = "05.05.2024";
         var entry = webAppService.getEntry(userId, currentDate);
 
         return ResponseHandler.responseBuilder("Requested entry", HttpStatus.OK, entry);
+    }
+
+    // getMood throws exception on userId not found and returns an updated NotFound response to client
+    @GetMapping("/mood/{userId}")
+    public ResponseEntity<Object> getMood(@PathVariable("userId") Long userId) {
+        var mood = webAppService.getMood(userId);
+
+        return ResponseHandler.responseBuilder("Mood entries from provided user id", HttpStatus.OK, mood);
     }
 }
