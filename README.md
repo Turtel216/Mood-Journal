@@ -32,6 +32,7 @@ This project uses the following technologies on the backend:
 
 This project uses the following technologies on the frontend:
 
+* NodeJS(version 20.11.1)
 * Typescript
 * ReactJS(version 18.3.1)
 * Axios
