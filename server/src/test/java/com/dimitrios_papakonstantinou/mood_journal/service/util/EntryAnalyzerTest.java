@@ -6,11 +6,16 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import static com.dimitrios_papakonstantinou.mood_journal.service.util.EntryAnalyzer.averageMood;
 import static com.dimitrios_papakonstantinou.mood_journal.service.util.EntryAnalyzer.countMoods;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class EntryAnalyzerTest {
 
@@ -21,6 +26,7 @@ class EntryAnalyzerTest {
     Entry entry4;
     Entry entry5;
     Entry entry6;
+    Map<Mood, Integer> counter;
 
     @BeforeEach
     void setUp() {
@@ -29,9 +35,15 @@ class EntryAnalyzerTest {
         entry3 = new Entry(1L, 1L, "some text", Mood.HORRIBLE, "05.05.2024");
         entry4 = new Entry(1L, 1L, "some text", Mood.GREATE, "05.05.2024");
         entry5 = new Entry(1L, 1L, "some text", Mood.BAD, "05.05.2024");
-        entry6 = new Entry(1L, 1L, "some text", Mood.GOOD, "05.05.2024");
+        entry6 = new Entry(1L, 1L, "some text", Mood.BAD, "05.05.2024");
 
-        entries = List.of(entry1, entry2, entry3, entry4, entry5, entry6);
+        entries = List.of(entry1,  entry2, entry3, entry4, entry5, entry6);
+
+        counter = new HashMap<>();
+        counter.put(Mood.GREATE, 1);
+        counter.put(Mood.BAD, 3);
+        counter.put(Mood.HORRIBLE, 1);
+        counter.put(Mood.GOOD, 1);
     }
 
     @AfterEach
@@ -44,20 +56,23 @@ class EntryAnalyzerTest {
         entry6 = null;
 
         entries = null;
+
+        counter = null;
     }
 
     // Test case Success
     @Test
-    void countMoods_Success() {
-
+    void testCountMoods_Success() {
+        var moods = entries.stream().map(Entry::getMood).toList();
+        assertThat(countMoods(moods).equals(counter)).isTrue();
     }
 
-    // Test case failure, return null
+
+    // Test case Failure
     @Test
-    void countMoods_ReturnNull() {
+    void averageMood_Success() {
+        assertThat(averageMood(entries).equals(Mood.BAD)).isTrue();
     }
 
-    @Test
-    void averageMood() {
-    }
+    //TODO Add test case failure, throw exception
 }

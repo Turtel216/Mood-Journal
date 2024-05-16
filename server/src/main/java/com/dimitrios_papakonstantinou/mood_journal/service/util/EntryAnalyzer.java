@@ -17,10 +17,14 @@ public class EntryAnalyzer {
 
         moods.forEach(mood -> {
             switch (mood) {
-                case GREATE -> counter.put(Mood.GREATE, counter.get(Mood.GREATE) + 1);
-                case GOOD -> counter.put(Mood.GOOD, counter.get(Mood.GOOD) + 1);
-                case BAD -> counter.put(Mood.BAD, counter.get(Mood.BAD) + 1);
-                case HORRIBLE -> counter.put(Mood.BAD, counter.get(Mood.HORRIBLE) + 1);
+                case GREATE -> counter.put(Mood.GREATE, counter.get(Mood.GREATE) == null ?
+                        1 : counter.get(Mood.GREATE) + 1);
+                case GOOD -> counter.put(Mood.GOOD, counter.get(Mood.GOOD) == null ?
+                        1 : counter.get(Mood.GOOD) + 1);
+                case BAD -> counter.put(Mood.BAD, counter.get(Mood.BAD) == null ?
+                        1 : counter.get(Mood.BAD) + 1);
+                case HORRIBLE -> counter.put(Mood.HORRIBLE, counter.get(Mood.HORRIBLE) == null ?
+                        1 : counter.get(Mood.HORRIBLE) + 1);
             }
         });
         return counter;
