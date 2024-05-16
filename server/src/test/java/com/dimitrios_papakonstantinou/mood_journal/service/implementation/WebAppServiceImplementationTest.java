@@ -177,4 +177,4 @@ class WebAppServiceImplementationTest {
                 () -> webAppService.getMood(user.getId()));
         assertEquals(exception.getMessage(), "Provided user id does not match any mood entry in the data base");
     }
-}
+j}

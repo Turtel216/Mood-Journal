@@ -36,7 +36,7 @@ public class EntryAnalyzer {
         return moodCount.entrySet().stream()
                 .max(Map.Entry.comparingByValue())
                 .map(Map.Entry::getKey)
-                .orElse(null);
+                .orElse(null); //TODO Throw exception
 
     }
 }
