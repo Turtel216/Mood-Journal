@@ -7,11 +7,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+//TODO Add tests for class
 public class EntryAnalyzer {
 
     public static Map<Mood, Integer> countMoods(List<Mood> moods) {
 
-        Map<Mood, Integer> counter = new HashMap<Mood, Integer>();
+        Map<Mood, Integer> counter = new HashMap<>();
 
         moods.forEach(mood -> {
             switch (mood) {
