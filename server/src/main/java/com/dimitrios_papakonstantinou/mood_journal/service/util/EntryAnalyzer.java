@@ -25,6 +25,7 @@ public class EntryAnalyzer {
         return counter;
     }
 
+    // Throws Exception
     public static Mood averageMood(List<Entry> entries) {
         //Convert List of entries to Array of Moods
         var moods = entries.stream().map(Entry::getMood).toList();
