@@ -2,6 +2,7 @@ package com.dimitrios_papakonstantinou.mood_journal.service.util;
 
 import com.dimitrios_papakonstantinou.mood_journal.datasource.models.Entry;
 import com.dimitrios_papakonstantinou.mood_journal.datasource.models.Mood;
+import com.dimitrios_papakonstantinou.mood_journal.exceptions.MoodCantGetAverage;
 
 import java.util.HashMap;
 import java.util.List;
@@ -34,10 +35,14 @@ public class EntryAnalyzer {
         Map<Mood, Integer> moodCount = countMoods(moods);
 
         // return the mood with the highest number of entries. Return null if there is no max
-        return moodCount.entrySet().stream()
+        var result = moodCount.entrySet().stream()
                 .max(Map.Entry.comparingByValue())
                 .map(Map.Entry::getKey)
                 .orElse(null); //TODO Throw exception
 
+        if(result == null)
+            throw new MoodCantGetAverage("Couldn't calculate mood average");
+
+        return result;
     }
 }
