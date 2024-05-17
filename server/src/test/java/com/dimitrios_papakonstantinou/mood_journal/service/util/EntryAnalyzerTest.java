@@ -31,14 +31,14 @@ class EntryAnalyzerTest {
         entry1 = new Entry(1L, 1L, "some text", Mood.GOOD, "05.05.2024");
         entry2 = new Entry(1L, 1L, "some text", Mood.BAD, "05.05.2024");
         entry3 = new Entry(1L, 1L, "some text", Mood.HORRIBLE, "05.05.2024");
-        entry4 = new Entry(1L, 1L, "some text", Mood.GREATE, "05.05.2024");
+        entry4 = new Entry(1L, 1L, "some text", Mood.GREAT, "05.05.2024");
         entry5 = new Entry(1L, 1L, "some text", Mood.BAD, "05.05.2024");
         entry6 = new Entry(1L, 1L, "some text", Mood.BAD, "05.05.2024");
 
         entries = List.of(entry1,  entry2, entry3, entry4, entry5, entry6);
 
         counter = new HashMap<>();
-        counter.put(Mood.GREATE, 1);
+        counter.put(Mood.GREAT, 1);
         counter.put(Mood.BAD, 3);
         counter.put(Mood.HORRIBLE, 1);
         counter.put(Mood.GOOD, 1);

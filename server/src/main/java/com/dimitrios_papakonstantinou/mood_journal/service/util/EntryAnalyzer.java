@@ -17,16 +17,18 @@ public class EntryAnalyzer {
         Map<Mood, Integer> counter = new HashMap<>();
 
         // Initialize hash map
-        counter.put(Mood.GREATE, 0);
+        counter.put(Mood.GREAT, 0);
         counter.put(Mood.GOOD, 0);
+        counter.put(Mood.MEH, 0);
         counter.put(Mood.BAD, 0);
         counter.put(Mood.HORRIBLE, 0);
 
         // Count each mood kind
         moods.forEach(mood -> {
             switch (mood) {
-                case GREATE -> counter.put(Mood.GREATE, counter.get(Mood.GREATE) + 1);
+                case GREAT -> counter.put(Mood.GREAT, counter.get(Mood.GREAT) + 1);
                 case GOOD -> counter.put(Mood.GOOD, counter.get(Mood.GOOD) + 1);
+                case MEH -> counter.put(Mood.MEH, counter.get(Mood.MEH) + 1);
                 case BAD -> counter.put(Mood.BAD, counter.get(Mood.BAD) + 1);
                 case HORRIBLE -> counter.put(Mood.HORRIBLE, counter.get(Mood.HORRIBLE) + 1);
             }
