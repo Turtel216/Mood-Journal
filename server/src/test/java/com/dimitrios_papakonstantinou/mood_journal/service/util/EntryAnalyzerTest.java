@@ -6,16 +6,14 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.dimitrios_papakonstantinou.mood_journal.service.util.EntryAnalyzer.averageMood;
+import static com.dimitrios_papakonstantinou.mood_journal.service.util.EntryAnalyzer.MoodMode;
 import static com.dimitrios_papakonstantinou.mood_journal.service.util.EntryAnalyzer.countMoods;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 class EntryAnalyzerTest {
 
@@ -70,8 +68,8 @@ class EntryAnalyzerTest {
 
     // Test case Failure
     @Test
-    void averageMood_Success() {
-        assertThat(averageMood(entries).equals(Mood.BAD)).isTrue();
+    void mood_Mode_Success() {
+        assertThat(MoodMode(entries).equals(Mood.BAD)).isTrue();
     }
 
     //TODO Add test case failure, throw exception

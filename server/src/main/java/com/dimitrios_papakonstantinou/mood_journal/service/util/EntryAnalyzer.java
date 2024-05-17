@@ -13,25 +13,30 @@ public class EntryAnalyzer {
 
     public static Map<Mood, Integer> countMoods(List<Mood> moods) {
 
+        // Hash map for counting each mood kind
         Map<Mood, Integer> counter = new HashMap<>();
 
+        // Initialize hash map
+        counter.put(Mood.GREATE, 0);
+        counter.put(Mood.GOOD, 0);
+        counter.put(Mood.BAD, 0);
+        counter.put(Mood.HORRIBLE, 0);
+
+        // Count each mood kind
         moods.forEach(mood -> {
             switch (mood) {
-                case GREATE -> counter.put(Mood.GREATE, counter.get(Mood.GREATE) == null ?
-                        1 : counter.get(Mood.GREATE) + 1);
-                case GOOD -> counter.put(Mood.GOOD, counter.get(Mood.GOOD) == null ?
-                        1 : counter.get(Mood.GOOD) + 1);
-                case BAD -> counter.put(Mood.BAD, counter.get(Mood.BAD) == null ?
-                        1 : counter.get(Mood.BAD) + 1);
-                case HORRIBLE -> counter.put(Mood.HORRIBLE, counter.get(Mood.HORRIBLE) == null ?
-                        1 : counter.get(Mood.HORRIBLE) + 1);
+                case GREATE -> counter.put(Mood.GREATE, counter.get(Mood.GREATE) + 1);
+                case GOOD -> counter.put(Mood.GOOD, counter.get(Mood.GOOD) + 1);
+                case BAD -> counter.put(Mood.BAD, counter.get(Mood.BAD) + 1);
+                case HORRIBLE -> counter.put(Mood.HORRIBLE, counter.get(Mood.HORRIBLE) + 1);
             }
         });
+
         return counter;
     }
 
     // Throws Exception
-    public static Mood averageMood(List<Entry> entries) {
+    public static Mood MoodMode(List<Entry> entries) {
         //Convert List of entries to Array of Moods
         var moods = entries.stream().map(Entry::getMood).toList();
 
@@ -42,8 +47,9 @@ public class EntryAnalyzer {
         var result = moodCount.entrySet().stream()
                 .max(Map.Entry.comparingByValue())
                 .map(Map.Entry::getKey)
-                .orElse(null); //TODO Throw exception
+                .orElse(null);
 
+        // Throw error its impossible to find the maximum
         if(result == null)
             throw new MoodCantGetAverage("Couldn't calculate mood average");
 
