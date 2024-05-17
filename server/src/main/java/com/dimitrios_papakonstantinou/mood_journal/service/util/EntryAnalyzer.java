@@ -7,6 +7,7 @@ import com.dimitrios_papakonstantinou.mood_journal.exceptions.MoodCantGetAverage
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 //TODO Add tests for class
 public class EntryAnalyzer {
@@ -38,8 +39,8 @@ public class EntryAnalyzer {
     }
 
     // Throws Exception
-    public static Mood MoodMode(List<Entry> entries) {
-        //Convert List of entries to Array of Moods
+    public static Mood moodMode(List<Entry> entries) {
+        //Convert List of entries to List of Moods
         var moods = entries.stream().map(Entry::getMood).toList();
 
         // count of each mood
@@ -56,5 +57,37 @@ public class EntryAnalyzer {
             throw new MoodCantGetAverage("Couldn't calculate mood average");
 
         return result;
+    }
+
+    public static Mood moodAverage(List<Entry> entries) {
+        // Convert List of entries to list of moods, with each mood given a specific number(int)
+        var moods = entries.stream().map(Entry::moodToInt).toList();
+
+        // Calculate average and return result
+        var average = (float) sumMoods(moods) / (float)moods.size();
+
+        return floatToMood(average);
+    }
+
+    public static int sumMoods(List<Integer> moods) {
+        // traverse the list and add each mood(int) to the sum
+        AtomicInteger sum = new AtomicInteger();
+        moods.forEach(sum::addAndGet);
+
+        return sum.get();
+    }
+
+    // Maps a float value to a Mood enum
+    public static Mood floatToMood(float mood) {
+        if(mood >= 4.5)
+            return Mood.GREAT;
+        if(mood >= 3.5)
+            return Mood.GOOD;
+        if(mood >= 2.5)
+            return Mood.MEH;
+        if(mood >= 1.5)
+            return Mood.BAD;
+
+        return Mood.HORRIBLE;
     }
 }

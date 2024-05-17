@@ -50,4 +50,26 @@ public class Entry {
 
         return true;
     }
+
+    public Integer moodToInt() {
+        switch (this.mood) {
+            case GREAT -> {
+                return 5;
+            }
+            case GOOD -> {
+                return 4;
+            }
+            case MEH -> {
+                return 3;
+            }
+            case BAD -> {
+                return 2;
+            }
+            case HORRIBLE -> {
+                return 1;
+            }
+        }
+
+        return 0;
+    }
 }

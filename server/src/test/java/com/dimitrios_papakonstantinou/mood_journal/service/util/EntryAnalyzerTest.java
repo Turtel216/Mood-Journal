@@ -10,8 +10,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.dimitrios_papakonstantinou.mood_journal.service.util.EntryAnalyzer.MoodMode;
 import static com.dimitrios_papakonstantinou.mood_journal.service.util.EntryAnalyzer.countMoods;
+import static com.dimitrios_papakonstantinou.mood_journal.service.util.EntryAnalyzer.moodMode;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 
@@ -70,7 +70,7 @@ class EntryAnalyzerTest {
     // Test case Failure
     @Test
     void mood_Mode_Success() {
-        assertThat(MoodMode(entries).equals(Mood.BAD)).isTrue();
+        assertThat(moodMode(entries).equals(Mood.BAD)).isTrue();
     }
 
     //TODO Add test case failure, throw exception
