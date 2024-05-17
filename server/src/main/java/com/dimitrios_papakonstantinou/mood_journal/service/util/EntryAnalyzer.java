@@ -4,10 +4,9 @@ import com.dimitrios_papakonstantinou.mood_journal.datasource.models.Entry;
 import com.dimitrios_papakonstantinou.mood_journal.datasource.models.Mood;
 import com.dimitrios_papakonstantinou.mood_journal.exceptions.MoodCantGetAverage;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 //TODO Add tests for class
 public class EntryAnalyzer {
@@ -66,7 +65,29 @@ public class EntryAnalyzer {
         // Calculate average and return result
         var average = (float) sumMoods(moods) / (float)moods.size();
 
-        return floatToMood(average);
+        return numberToMood(average);
+    }
+
+    public static Mood moodMean(List<Entry> entries) {
+        // Convert List of entries to list of moods, with each mood given a specific number(int)
+        var moods = entries.stream().map(Entry::moodToInt).toList();
+
+        // Sort the list
+        moods = moods.stream()
+                .sorted()
+                .toList();
+
+        // If the size of the list is even it return the middle value
+        if(moods.size() % 2 != 0) {
+            var middle = moods.get(
+                    (moods.size() / 2) - 1
+            );
+
+            return numberToMood(middle);
+        }
+
+        // if the mood is odd we return the average of all moods
+        return moodAverage(entries);
     }
 
     public static int sumMoods(List<Integer> moods) {
@@ -77,8 +98,9 @@ public class EntryAnalyzer {
         return sum.get();
     }
 
+    //numberToMood is overloaded to be used for both float and int values
     // Maps a float value to a Mood enum
-    public static Mood floatToMood(float mood) {
+    public static Mood numberToMood(float mood) {
         if(mood >= 4.5)
             return Mood.GREAT;
         if(mood >= 3.5)
@@ -86,6 +108,20 @@ public class EntryAnalyzer {
         if(mood >= 2.5)
             return Mood.MEH;
         if(mood >= 1.5)
+            return Mood.BAD;
+
+        return Mood.HORRIBLE;
+    }
+
+    //Maps an int value to a Mood enum
+    public static Mood numberToMood(int mood) {
+        if(mood == 5)
+            return Mood.GREAT;
+        if(mood == 4)
+            return Mood.GOOD;
+        if(mood == 3)
+            return Mood.MEH;
+        if(mood == 2)
             return Mood.BAD;
 
         return Mood.HORRIBLE;
