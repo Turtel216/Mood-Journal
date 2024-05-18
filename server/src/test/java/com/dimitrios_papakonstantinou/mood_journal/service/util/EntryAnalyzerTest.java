@@ -2,17 +2,17 @@ package com.dimitrios_papakonstantinou.mood_journal.service.util;
 
 import com.dimitrios_papakonstantinou.mood_journal.datasource.models.Entry;
 import com.dimitrios_papakonstantinou.mood_journal.datasource.models.Mood;
+import com.dimitrios_papakonstantinou.mood_journal.exceptions.MoodCantGetAverage;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
-import static com.dimitrios_papakonstantinou.mood_journal.service.util.EntryAnalyzer.countMoods;
-import static com.dimitrios_papakonstantinou.mood_journal.service.util.EntryAnalyzer.moodMode;
+import static com.dimitrios_papakonstantinou.mood_journal.service.util.EntryAnalyzer.*;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 
 class EntryAnalyzerTest {
@@ -66,12 +66,25 @@ class EntryAnalyzerTest {
         assertThat(countMoods(moods).equals(counter)).isTrue();
     }
 
+    // Test case Failure
+    @Test
+    void testCountMoods_Failure() {
+
+        var falseCounter = new HashMap<>();
+        falseCounter.put(Mood.GREAT, 3);
+        falseCounter.put(Mood.BAD, 1);
+        falseCounter.put(Mood.HORRIBLE, 1);
+        falseCounter.put(Mood.GOOD, 3);
+        falseCounter.put(Mood.MEH, 1);
+
+        var moods = entries.stream().map(Entry::getMood).toList();
+        assertThat(countMoods(moods).equals(falseCounter)).isFalse();
+    }
+
 
     // Test case Failure
     @Test
-    void mood_Mode_Success() {
+    void moodMode_Success() {
         assertThat(moodMode(entries).equals(Mood.BAD)).isTrue();
     }
-
-    //TODO Add test case failure, throw exception
 }
