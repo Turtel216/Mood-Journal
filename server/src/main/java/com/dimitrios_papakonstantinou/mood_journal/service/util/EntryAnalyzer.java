@@ -67,10 +67,10 @@ public class EntryAnalyzer {
         // Calculate average and return result
         var average = (float) sumMoods(moods) / (float)moods.size();
 
+        //convert the float value to a mood enum
         return numberToMood(average);
     }
 
-    //TODO fix bug.
     public static Mood moodMedian(List<Entry> entries) {
         // Convert List of entries to list of moods, with each mood given a specific number(int)
         var moods = entries.stream().map(Entry::moodToInt).toList();
@@ -82,15 +82,24 @@ public class EntryAnalyzer {
 
         // If the size of the list is odd it returns the middle value
         if(moods.size() % 2 != 0) {
-            var middle = moods.get( // BUG! The median of odd number of elements is the average of the 2 middle elements, not the total average
-                    (moods.size() / 2) - 1
+            var middle = moods.get(
+                    moods.size() / 2
             );
 
             return numberToMood(middle);
         }
 
-        // if the mood is even we return the average of all moods
-        return moodMean(entries);
+        // if the mood is even we return the average of the 2 middle values
+        var middleEntries = List.of( //get the 2 middle values
+                moods.get(moods.size() / 2),
+                moods.get(moods.size() / 2 - 1)
+        );
+
+        //calculate the average of the 2 middle values
+        var average = (float) sumMoods(moods) / (float)moods.size();
+
+        //convert the float value to a mood enum
+        return numberToMood(average);
     }
 
     public static int sumMoods(List<Integer> moods) {

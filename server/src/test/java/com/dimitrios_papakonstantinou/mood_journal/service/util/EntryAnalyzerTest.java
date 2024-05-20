@@ -92,14 +92,15 @@ class EntryAnalyzerTest {
 
     // Test case Success
     @Test
-    void testMoodMedian_Success_Even() {
-        assertThat(moodMedian(entries).equals(Mood.MEH)).isTrue();
-    }
-
-    @Test
     void testMoodMedian_Success_Odd() {
         var entries_odd = List.of(entry1, entry2, entry3);
         assertThat(moodMedian(entries_odd).equals(Mood.BAD)).isTrue();
+    }
+
+    @Test
+    void testMoodMedian_Success_Even() {
+        var entries_even = List.of(entry1, entry2, entry3, entry4);
+        assertThat(moodMedian(entries_even).equals(Mood.MEH)).isTrue();
     }
     // Test case Success
     @Test
