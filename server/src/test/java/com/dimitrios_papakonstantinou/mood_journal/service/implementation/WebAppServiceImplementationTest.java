@@ -228,7 +228,7 @@ class WebAppServiceImplementationTest {
         assertThat(webAppService.getMode(user.getId()).equals(Mood.GOOD)).isTrue();
     }
 
-    // Test case Success
+    // Test case Failure
     @Test
     void testGetMode_UserNotFound() {
         mock(Entry.class);
@@ -238,6 +238,30 @@ class WebAppServiceImplementationTest {
 
         UserIdNotFoundException exception = assertThrows(UserIdNotFoundException.class,
                 () -> webAppService.getMode(user.getId()));
+        assertEquals(exception.getMessage(), "Provided user id does not match any user in the data base");
+    }
+
+    // Test case Success
+    @Test
+    void testGetMedian_Success() {
+        mock(Entry.class);
+        mock(EntryRepository.class);
+
+        when(entryRepository.findByUserId(user.getId())).thenReturn(Optional.of(entryList));
+
+        assertThat(webAppService.getMedian(user.getId()).equals(Mood.GOOD)).isTrue();
+    }
+
+    // Test case Failure
+    @Test
+    void testGetMedian_UserNotFound() {
+        mock(Entry.class);
+        mock(EntryRepository.class);
+
+        when(entryRepository.findByUserId(user.getId())).thenReturn(Optional.empty());
+
+        UserIdNotFoundException exception = assertThrows(UserIdNotFoundException.class,
+                () -> webAppService.getMedian(user.getId()));
         assertEquals(exception.getMessage(), "Provided user id does not match any user in the data base");
     }
 }

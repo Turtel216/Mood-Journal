@@ -90,13 +90,13 @@ public class EntryAnalyzer {
         }
 
         // if the mood is even we return the average of the 2 middle values
-        var middleEntries = List.of( //get the 2 middle values
+        var middleMoods = List.of( //get the 2 middle values
                 moods.get(moods.size() / 2),
                 moods.get(moods.size() / 2 - 1)
         );
 
         //calculate the average of the 2 middle values
-        var average = (float) sumMoods(moods) / (float)moods.size();
+        var average = (float) sumMoods(middleMoods) / (float)middleMoods.size();
 
         //convert the float value to a mood enum
         return numberToMood(average);

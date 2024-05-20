@@ -14,4 +14,5 @@ public interface WebAppService {
     public List<Mood> getMood(Long userId);
     public Mood getMean(Long userId);
     public Mood getMode(Long userId);
+    public Mood getMedian(Long userId);
 }

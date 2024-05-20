@@ -52,13 +52,23 @@ public class WebAppController {
                 HttpStatus.OK, mean);
     }
 
-    // getMean throws exception on userId not found and returns an updated NotFound response to client
+    // getMode throws exception on userId not found and returns an updated NotFound response to client
     @GetMapping("/mood/mode/{userId}")
     public ResponseEntity<Object> getMode(@PathVariable("userId") Long userId) {
-        var mean = webAppService.getMode(userId);
+        var mode = webAppService.getMode(userId);
 
         return ResponseHandler.responseBuilder(
                 "The mode mood of all entries by the user with the request id",
-                HttpStatus.OK, mean);
+                HttpStatus.OK, mode);
+    }
+
+    // getMedian throws exception on userId not found and returns an updated NotFound response to client
+    @GetMapping("/mood/mean/{userId}")
+    public ResponseEntity<Object> getMedian(@PathVariable("userId") Long userId) {
+        var median = webAppService.getMedian(userId);
+
+        return ResponseHandler.responseBuilder(
+                "The mode mood of all entries by the user with the request id",
+                HttpStatus.OK, median);
     }
 }

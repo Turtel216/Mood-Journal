@@ -16,8 +16,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.dimitrios_papakonstantinou.mood_journal.service.util.EntryAnalyzer.moodMean;
-import static com.dimitrios_papakonstantinou.mood_journal.service.util.EntryAnalyzer.moodMode;
+import static com.dimitrios_papakonstantinou.mood_journal.service.util.EntryAnalyzer.*;
 
 @Service
 @AllArgsConstructor
@@ -80,7 +79,7 @@ public class WebAppServiceImplementation implements WebAppService {
         return moodMean(entries);
     }
 
-    //TODO add proper error handling when calling the moodMean method
+    //TODO add proper error handling when calling the moodMode method
     @Override
     public Mood getMode(Long userId) {
         if(entryRepository.findByUserId(userId).isEmpty())
@@ -89,5 +88,16 @@ public class WebAppServiceImplementation implements WebAppService {
         var entries = entryRepository.findByUserId(userId).get();
 
         return moodMode(entries);
+    }
+
+    //TODO add proper error handling when calling the moodMedian method
+    @Override
+    public Mood getMedian(Long userId) {
+        if(entryRepository.findByUserId(userId).isEmpty())
+            throw new UserIdNotFoundException("Provided user id does not match any user in the data base");
+
+        var entries = entryRepository.findByUserId(userId).get();
+
+        return moodMedian(entries);
     }
 }
