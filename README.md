@@ -1,6 +1,5 @@
 <div align=center>
-    <img src="Docs/logo-color.png">
-    <h1> Mood Journal </h1>
+    <img src="Docs/logo-color.png" width=220 height=220>
 </div>
 
 
