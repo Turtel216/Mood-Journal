@@ -1,4 +1,8 @@
-<h1> Mood Journal </h1>
+<div align=center>
+    <img src="Docs/logo-color.png">
+    <h1> Mood Journal </h1>
+</div>
+
 
 <h2>Table of Content</h2>
 <ol>
