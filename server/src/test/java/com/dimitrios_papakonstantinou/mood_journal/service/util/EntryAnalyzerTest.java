@@ -2,7 +2,6 @@ package com.dimitrios_papakonstantinou.mood_journal.service.util;
 
 import com.dimitrios_papakonstantinou.mood_journal.datasource.models.Entry;
 import com.dimitrios_papakonstantinou.mood_journal.datasource.models.Mood;
-import com.dimitrios_papakonstantinou.mood_journal.exceptions.MoodCantGetAverage;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,9 +10,6 @@ import java.util.*;
 
 import static com.dimitrios_papakonstantinou.mood_journal.service.util.EntryAnalyzer.*;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.mock;
 
 class EntryAnalyzerTest {
 
@@ -46,7 +42,7 @@ class EntryAnalyzerTest {
     }
 
     @AfterEach
-    void tearDown() {
+    void tearDown() throws Exception{
         entry1 = null;
         entry2 = null;
         entry3 = null;
@@ -82,9 +78,34 @@ class EntryAnalyzerTest {
     }
 
 
-    // Test case Failure
+    // Test case Success
     @Test
-    void moodMode_Success() {
+    void testMoodMode_Success() {
         assertThat(moodMode(entries).equals(Mood.BAD)).isTrue();
+    }
+
+    // Test case Success
+    @Test
+    void testMoodMean() {
+        assertThat(moodMean(entries).equals(Mood.MEH)).isTrue();
+    }
+
+    // Test case Success
+    @Test
+    void testMoodMedian_Success_Even() {
+        assertThat(moodMedian(entries).equals(Mood.MEH)).isTrue();
+    }
+
+    @Test
+    void testMoodMedian_Success_Odd() {
+        var entries_odd = List.of(entry1, entry2, entry3);
+        assertThat(moodMedian(entries_odd).equals(Mood.BAD)).isTrue();
+    }
+    // Test case Success
+    @Test
+    void testSumMood_Success() {
+        List<Integer> moodCount = new ArrayList<>(List.of(1, 2, 3, 2, 6));
+
+        assertThat(sumMoods(moodCount) == 14).isTrue();
     }
 }

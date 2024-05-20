@@ -3,12 +3,14 @@ package com.dimitrios_papakonstantinou.mood_journal.service.util;
 import com.dimitrios_papakonstantinou.mood_journal.datasource.models.Entry;
 import com.dimitrios_papakonstantinou.mood_journal.datasource.models.Mood;
 import com.dimitrios_papakonstantinou.mood_journal.exceptions.MoodCantGetAverage;
+import lombok.NonNull;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 //TODO Add tests for class
+//TODO Improve null safety
 public class EntryAnalyzer {
 
     public static Map<Mood, Integer> countMoods(List<Mood> moods) {
@@ -58,7 +60,7 @@ public class EntryAnalyzer {
         return result;
     }
 
-    public static Mood moodAverage(List<Entry> entries) {
+    public static Mood moodMean(List<Entry> entries) {
         // Convert List of entries to list of moods, with each mood given a specific number(int)
         var moods = entries.stream().map(Entry::moodToInt).toList();
 
@@ -68,7 +70,8 @@ public class EntryAnalyzer {
         return numberToMood(average);
     }
 
-    public static Mood moodMean(List<Entry> entries) {
+    //TODO fix bug.
+    public static Mood moodMedian(List<Entry> entries) {
         // Convert List of entries to list of moods, with each mood given a specific number(int)
         var moods = entries.stream().map(Entry::moodToInt).toList();
 
@@ -77,17 +80,17 @@ public class EntryAnalyzer {
                 .sorted()
                 .toList();
 
-        // If the size of the list is even it return the middle value
+        // If the size of the list is odd it returns the middle value
         if(moods.size() % 2 != 0) {
-            var middle = moods.get(
+            var middle = moods.get( // BUG! The median of odd number of elements is the average of the 2 middle elements, not the total average
                     (moods.size() / 2) - 1
             );
 
             return numberToMood(middle);
         }
 
-        // if the mood is odd we return the average of all moods
-        return moodAverage(entries);
+        // if the mood is even we return the average of all moods
+        return moodMean(entries);
     }
 
     public static int sumMoods(List<Integer> moods) {
