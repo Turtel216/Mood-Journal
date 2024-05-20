@@ -12,4 +12,5 @@ public interface WebAppService {
     public Entry getEntry(Long userId, String currentDate);
     public User getUser(Long userId);
     public List<Mood> getMood(Long userId);
+    public Mood getMean(Long userId);
 }

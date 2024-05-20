@@ -41,4 +41,14 @@ public class WebAppController {
 
         return ResponseHandler.responseBuilder("Mood entries from provided user id", HttpStatus.OK, mood);
     }
+
+    // getMean throws exception on userId not found and returns an updated NotFound response to client
+    @GetMapping("/mood/mean/{userId}")
+    public ResponseEntity<Object> getMean(@PathVariable("userId") Long userId) {
+        var mean = webAppService.getMean(userId);
+
+        return ResponseHandler.responseBuilder(
+                "The mean mood of all entries by the user with the request id",
+                HttpStatus.OK, mean);
+    }
 }

@@ -10,16 +10,21 @@ import com.dimitrios_papakonstantinou.mood_journal.exceptions.EntryIdAndEntryDat
 import com.dimitrios_papakonstantinou.mood_journal.exceptions.UserIdNotFoundException;
 import com.dimitrios_papakonstantinou.mood_journal.service.WebAppService;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.dimitrios_papakonstantinou.mood_journal.service.util.EntryAnalyzer.moodMean;
+
 @Service
 @AllArgsConstructor
 public class WebAppServiceImplementation implements WebAppService {
 
+    @Autowired
     private EntryRepository entryRepository;
+    @Autowired
     private UserRepository userRepository;
 
     @Override
@@ -61,5 +66,16 @@ public class WebAppServiceImplementation implements WebAppService {
                     .collect(Collectors.toList());
 
         throw new UserIdNotFoundException("Provided user id does not match any mood entry in the data base");
+    }
+
+    //TODO add proper error handling when calling the moodMean method
+    @Override
+    public Mood getMean(Long userId) {
+        if(entryRepository.findByUserId(userId).isEmpty())
+            throw new UserIdNotFoundException("Provided user id does not match any user in the data base");
+
+        var entries = entryRepository.findByUserId(userId).get();
+
+        return moodMean(entries);
     }
 }
