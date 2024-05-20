@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.dimitrios_papakonstantinou.mood_journal.service.util.EntryAnalyzer.moodMean;
+import static com.dimitrios_papakonstantinou.mood_journal.service.util.EntryAnalyzer.moodMode;
 
 @Service
 @AllArgsConstructor
@@ -77,5 +78,15 @@ public class WebAppServiceImplementation implements WebAppService {
         var entries = entryRepository.findByUserId(userId).get();
 
         return moodMean(entries);
+    }
+
+    @Override
+    public Mood getMode(Long userId) {
+        if(entryRepository.findByUserId(userId).isEmpty())
+            throw new UserIdNotFoundException("Provided user id does not match any user in the data base");
+
+        var entries = entryRepository.findByUserId(userId).get();
+
+        return moodMode(entries);
     }
 }
