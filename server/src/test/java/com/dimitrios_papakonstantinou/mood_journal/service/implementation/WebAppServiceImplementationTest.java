@@ -32,10 +32,17 @@ class WebAppServiceImplementationTest {
     @Mock
     private UserRepository userRepository;
     private WebAppService webAppService;
+
     AutoCloseable autoCloseable;
-    Entry entry;
-    Mood mood;
-    User user;
+    Mood mood; //default mood, used in most tests
+    Entry entry; //default entry, used for most tests
+    // entry 1-4, used for tests that require a list of entries
+    Entry entry1;
+    Entry entry2;
+    Entry entry3;
+    Entry entry4;
+    User user; //default user, used in most tests
+    List<Entry> entryList;
 
     @BeforeEach
     void setUp() {
@@ -43,7 +50,15 @@ class WebAppServiceImplementationTest {
         webAppService = new WebAppServiceImplementation(entryRepository, userRepository);
 
         mood = Mood.GOOD;
+
         entry = new Entry(1L, 1L, "some text", mood, "05.05.2024");
+
+        entry1 = new Entry(1L, 1L, "some text", Mood.GOOD, "05.05.2024");
+        entry2 = new Entry(1L, 2L, "some text", Mood.GOOD, "05.05.2024");
+        entry3 = new Entry(1L, 3L, "some text", Mood.MEH, "05.05.2024");
+        entry4 = new Entry(1L, 4L, "some text", Mood.HORRIBLE, "05.05.2024");
+
+        entryList = List.of(entry1, entry2, entry3, entry4);
 
         user = new User(1L, "stelios", "password", "email@mail.com");
         userRepository.save(user);
@@ -176,5 +191,53 @@ class WebAppServiceImplementationTest {
         UserIdNotFoundException exception = assertThrows(UserIdNotFoundException.class,
                 () -> webAppService.getMood(user.getId()));
         assertEquals(exception.getMessage(), "Provided user id does not match any mood entry in the data base");
+    }
+
+    // Test case Success
+    @Test
+    void testGetMean_Success() {
+        mock(Entry.class);
+        mock(EntryRepository.class);
+
+        when(entryRepository.findByUserId(user.getId())).thenReturn(Optional.of(entryList));
+
+        assertThat(webAppService.getMean(user.getId()).equals(Mood.MEH)).isTrue();
+    }
+
+    // Test case Success
+    @Test
+    void testGetMean_UserNotFound() {
+        mock(Entry.class);
+        mock(EntryRepository.class);
+
+        when(entryRepository.findByUserId(user.getId())).thenReturn(Optional.empty());
+
+        UserIdNotFoundException exception = assertThrows(UserIdNotFoundException.class,
+                () -> webAppService.getMean(user.getId()));
+        assertEquals(exception.getMessage(), "Provided user id does not match any user in the data base");
+    }
+
+    // Test case Success
+    @Test
+    void testGetMode_Success() {
+        mock(Entry.class);
+        mock(EntryRepository.class);
+
+        when(entryRepository.findByUserId(user.getId())).thenReturn(Optional.of(entryList));
+
+        assertThat(webAppService.getMode(user.getId()).equals(Mood.GOOD)).isTrue();
+    }
+
+    // Test case Success
+    @Test
+    void testGetMode_UserNotFound() {
+        mock(Entry.class);
+        mock(EntryRepository.class);
+
+        when(entryRepository.findByUserId(user.getId())).thenReturn(Optional.empty());
+
+        UserIdNotFoundException exception = assertThrows(UserIdNotFoundException.class,
+                () -> webAppService.getMode(user.getId()));
+        assertEquals(exception.getMessage(), "Provided user id does not match any user in the data base");
     }
 }

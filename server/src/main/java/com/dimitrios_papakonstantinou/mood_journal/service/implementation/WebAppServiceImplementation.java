@@ -80,6 +80,7 @@ public class WebAppServiceImplementation implements WebAppService {
         return moodMean(entries);
     }
 
+    //TODO add proper error handling when calling the moodMean method
     @Override
     public Mood getMode(Long userId) {
         if(entryRepository.findByUserId(userId).isEmpty())
